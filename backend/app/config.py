@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 APP_NAME = os.getenv("APP_NAME", "AI Interviewer")
 
@@ -17,7 +17,7 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 MODEL_NAME = os.getenv(
     "GROQ_MODEL_NAME",
-    os.getenv("MODEL_NAME", "llama-3.1-8b-instant")
+    "openai/gpt-oss-20b"
 )
 
 DATABASE_URL = os.getenv("DATABASE_URL")
