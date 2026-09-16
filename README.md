@@ -1,4 +1,4 @@
-# 🤖 AI Interviewer
+# 🤖 PANAL (AI Interviewer)
 
 > **An AI-powered, resume-aware technical interview platform that analyzes a candidate's resume, generates personalized interview questions, evaluates answers, and produces a detailed final interview performance report.**
 
