@@ -35,7 +35,9 @@ Return:
 
         try:
             response = self.llm.invoke(prompt)
-            return self._parse_analysis(response.content)
+            analysis = self._parse_analysis(response.content)
+            analysis["_resume_text"] = resume_text
+            return analysis
         except Exception as error:
             raise RuntimeError(f"Groq resume analysis failed: {error}") from error
 
