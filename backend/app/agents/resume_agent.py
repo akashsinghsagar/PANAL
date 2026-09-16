@@ -1,3 +1,6 @@
+import json
+import re
+
 from langchain_groq import ChatGroq
 
 from app.config import GROQ_API_KEY, MODEL_NAME
@@ -32,9 +35,33 @@ Return:
 
         try:
             response = self.llm.invoke(prompt)
-            return response.content
+            return self._parse_analysis(response.content)
         except Exception as error:
             raise RuntimeError(f"Groq resume analysis failed: {error}") from error
+
+    @staticmethod
+    def _parse_analysis(content: str) -> dict:
+        cleaned = content.strip()
+        cleaned = re.sub(r"^```(?:json)?\s*", "", cleaned, flags=re.IGNORECASE)
+        cleaned = re.sub(r"\s*```$", "", cleaned).strip()
+
+        try:
+            parsed = json.loads(cleaned)
+            if isinstance(parsed, dict):
+                return parsed
+        except json.JSONDecodeError:
+            pass
+
+        match = re.search(r"\{.*\}", cleaned, re.DOTALL)
+        if match:
+            try:
+                parsed = json.loads(match.group(0))
+                if isinstance(parsed, dict):
+                    return parsed
+            except json.JSONDecodeError:
+                pass
+
+        return {"raw_analysis": content}
 
 
 resume_agent = ResumeAgent()

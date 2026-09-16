@@ -121,9 +121,11 @@ async def start_interview(
     try:
 
         first_question = (
-            live_interviewer_agent.generate_next_question(
+            live_interviewer_agent.generate_stage_question(
                 resume_analysis=request.resume_analysis,
-                conversation=[]
+                conversation=[],
+                stage=STAGES[0],
+                question_number=1,
             )
         )
 
@@ -262,9 +264,11 @@ async def answer_question(
         session["current_stage"] = next_stage_index
 
         next_question = (
-            live_interviewer_agent.generate_next_question(
+            live_interviewer_agent.generate_stage_question(
                 resume_analysis=session["resume_analysis"],
-                conversation=session["conversation"]
+                conversation=session["conversation"],
+                stage=STAGES[next_stage_index],
+                question_number=next_question_number,
             )
         )
 
