@@ -41,13 +41,11 @@ and professional development.
 Ask questions based only on the resume.
 """,
 
-            "Certifications": """
-Focus on certifications, courses, technologies,
-and knowledge associated with certifications
-listed on the resume.
-
-Ask the candidate to explain what they learned
-or how they applied that knowledge.
+            "Skills": """
+Focus on the candidate's technical skills listed
+in the resume. Ask how the candidate used those
+skills, their level of understanding, and which
+tools or technologies were used in projects.
 """,
 
             "Projects": """
@@ -101,9 +99,9 @@ Each stage has EXACTLY 2 questions.
 The stages are:
 
 1. Resume parsed
-2. Experience
-3. Certifications
-4. Projects
+2. Projects
+3. Skills
+4. Experience
 5. Wrap-up
 
 CURRENT STAGE INSTRUCTIONS:

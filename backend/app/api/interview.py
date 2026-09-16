@@ -23,9 +23,9 @@ MAX_QUESTIONS = 10
 
 STAGES = [
     "Resume parsed",
-    "Experience",
-    "Certifications",
     "Projects",
+    "Skills",
+    "Experience",
     "Wrap-up"
 ]
 

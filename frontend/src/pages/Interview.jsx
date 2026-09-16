@@ -5,9 +5,9 @@ import { api } from '../lib/api'
 /* ── Stage config ─────────────────────────────────────────────── */
 const STAGES = [
   { label: 'Resume parsed',  short: 'Resume'  },
-  { label: 'Experience',     short: 'Exp'     },
-  { label: 'Certifications', short: 'Certs'   },
   { label: 'Projects',       short: 'Projects'},
+  { label: 'Skills',         short: 'Skills'  },
+  { label: 'Experience',     short: 'Exp'     },
   { label: 'Wrap-up',        short: 'Wrap-up' },
 ]
 const TOTAL_Q = 10
@@ -83,9 +83,12 @@ export default function Interview() {
       const res = await api.submitAnswer(sessionId, answer)
       setAnswer('')
       setAnsweredCount(c => c + 1)
-      if (res.interview_completed || !res.question) {
+      if (res.interview_completed === true) {
         setIsCompleted(true)
       } else {
+        if (!res.question || !res.question_number) {
+          throw new Error('The server did not return the next interview question.')
+        }
         setQuestion(res.question)
         setQNum(res.question_number)
         setQuestionKey(k => k + 1)
@@ -97,7 +100,9 @@ export default function Interview() {
     }
   }
 
-  const onFinish = () => navigate(`/report/${sessionId}`)
+  const onFinish = () => {
+    if (isCompleted) navigate(`/report/${sessionId}`)
+  }
   const onKeyDown = (e) => {
     if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
       e.preventDefault()
@@ -149,9 +154,9 @@ export default function Interview() {
         </div>
 
         {/* Finish CTA */}
-        <button className="iv-finish-btn" onClick={onFinish} disabled={loading}>
+        <button className="iv-finish-btn" onClick={onFinish} disabled={loading || !isCompleted}>
           <IconFlag />
-          End &amp; get report
+          {isCompleted ? 'Get report' : 'Complete interview first'}
         </button>
       </aside>
 
