@@ -1,5 +1,5 @@
-// Adjust base URL / paths here if your FastAPI routes differ.
-const BASE = '/api'
+// Use the Vite proxy locally and the deployed API in production.
+const BASE = import.meta.env.VITE_API_URL || '/api'
 
 async function req(path, options = {}) {
   const res = await fetch(`${BASE}${path}`, {
